@@ -180,7 +180,8 @@ window.gethint = function() {
     if (hintLevel === 1) status.innerHTML = `📍 Hint 1: Nationality is <b>${secretPlayer.nationality}</b>`;
     else if (hintLevel === 2) status.innerHTML = `🏃 Hint 2: Position is <b>${secretPlayer.position}</b>`;
     else if (hintLevel === 3) status.innerHTML = `🎂 Hint 3: Age is <b>${secretPlayer.age}</b>`;
-    else if (hintLevel === 4) status.innerHTML = `🏠 Hint 4: Club is <b>${secretPlayer.club}</b>`;
+    else if (hintLevel === 4) status.innerHTML = `🥈 Hint 4: League is <b>${secretPlayer.league}</b>`;
+    else if (hintLevel === 5) status.innerHTML = `🏠 Hint 5: Club is <b>${secretPlayer.club}</b>`;
     else {
         status.innerHTML = "🛑 <b>Give up already!</b>";
         hintsDisabled = true;
