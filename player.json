@@ -1,0 +1,74 @@
+[
+  {
+    "name": "Erling Haaland",
+    "club": "Manchester City",
+    "league": "Premier League",
+    "nationality": "Norway",
+    "position": "Forward",
+    "age": 25
+  },
+  {
+    "name": "Lamine Yamal",
+    "club": "Barcelona",
+    "league": "La Liga",
+    "nationality": "Spain",
+    "position": "Forward",
+    "age": 18
+  },
+  {
+    "name": "Harry Kane",
+    "club": "Bayern Munich",
+    "league": "Bundesliga",
+    "nationality": "England",
+    "position": "Forward",
+    "age": 32
+  },
+  {
+    "name": "Lautaro Martínez",
+    "club": "Inter Milan",
+    "league": "Serie A",
+    "nationality": "Argentina",
+    "position": "Forward",
+    "age": 28
+  },
+  {
+    "name": "Kylian Mbappé",
+    "club": "Real Madrid",
+    "league": "La Liga",
+    "nationality": "France",
+    "position": "Forward",
+    "age": 27
+  },
+  {
+    "name": "Bradley Barcola",
+    "club": "Paris Saint Germain",
+    "league": "Ligue 1",
+    "nationality": "France",
+    "position": "Forward",
+    "age": 23
+  },
+  {
+    "name": "Joo Min-kyu",
+    "club": "Ulsan HD",
+    "league": "K League 1",
+    "nationality": "South Korea",
+    "position": "Forward",
+    "age": 35
+  },
+  {
+    "name": "Jesse Lingard",
+    "club": "FC Seoul",
+    "league": "K League 1",
+    "nationality": "England",
+    "position": "Midfielder",
+    "age": 33
+  },
+  {
+    "name": "Son Heung-min",
+    "club": "Tottenham",
+    "league": "Premier League",
+    "nationality": "South Korea",
+    "position": "Forward",
+    "age": 33
+  }
+]
