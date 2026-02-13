@@ -57,12 +57,12 @@ const slug = (str) => str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f
 async function loadData() {
     try {
         // This fetches the file created by your GitHub Action
-        const response = await fetch("./players.json");
+        const response = await fetch("./player.json");
         players = await response.json();
         document.getElementById("status").innerHTML = "Ready! Guess the 2026 star.";
         initGame();
     } catch (e) {
-        document.getElementById("status").innerHTML = "Error loading squads. Make sure players.json exists.";
+        document.getElementById("status").innerHTML = "Error loading squads. Make sure player.json exists.";
         console.error(e);
     }
 }
