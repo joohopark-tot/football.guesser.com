@@ -1,4 +1,4 @@
-\name: Daily Squad Sync
+name: Daily Squad Sync
 
 on:
   schedule:
@@ -29,9 +29,13 @@ jobs:
 
       - name: Commit and Push Changes
         run: |
+          # Properly quoted config to fix the "unexpected EOF" error
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Pull latest changes to fix the "fetch first" rejection
           git pull --rebase origin main
+          
           git add player.json
           git commit -m "Auto-update players [$(date)]" || echo "No changes to commit"
           git push origin main
