@@ -16,7 +16,7 @@ async function fetchAll() {
     let allPlayers = [];
 
     if (!API_KEY) {
-        console.error("❌ API_KEY is missing from Secrets.");
+        console.error("❌ API_KEY is missing from GitHub Secrets.");
         process.exit(1);
     }
 
@@ -34,8 +34,8 @@ async function fetchAll() {
 
             if (data.response && data.response.length > 0) {
                 const mapped = data.response.map(item => {
-                    // SAFE CHECK: Handle cases where statistics[0] might be missing
-                    const stats = item.statistics?.[0];
+                    // FIX: Safe navigation for statistics array to prevent 'reading 0' crash
+                    const stats = item.statistics?.[0]; 
                     return {
                         name: item.player.name,
                         club: stats?.team?.name || "Unknown Club",
@@ -46,9 +46,9 @@ async function fetchAll() {
                     };
                 });
                 allPlayers = [...allPlayers, ...mapped];
-                console.log(`✅ Successfully added ${mapped.length} players.`);
+                console.log(`✅ Successfully added ${mapped.length} players from ${league.name}`);
             }
-            // Wait 1.5 seconds to avoid rate limiting
+            // Respect API rate limits
             await new Promise(r => setTimeout(r, 1500));
         } catch (e) {
             console.error(`❌ Error fetching ${league.name}:`, e.message);
