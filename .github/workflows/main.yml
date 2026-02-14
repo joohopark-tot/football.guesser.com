@@ -2,10 +2,9 @@ name: Daily Squad Sync
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Runs every night at midnight UTC
-  workflow_dispatch:    # Allows you to run it manually from the Actions tab
+    - cron: '0 0 * * *' # Runs at midnight
+  workflow_dispatch:    # Allows manual trigger
 
-# This gives the Action permission to write the new player.json to your repo
 permissions:
   contents: write
 
@@ -17,8 +16,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          # Fetches full history so rebase works correctly
-          fetch-depth: 0 
+          fetch-depth: 0 # <--- THIS FIXES THE "[rejected] fetch first" ERROR
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -27,8 +25,7 @@ jobs:
 
       - name: Run Update Script
         env:
-          # This pulls the key from your Settings > Secrets > Actions
-          API_KEY: ${{ secrets.API_KEY }} 
+          API_KEY: ${{ secrets.API_KEY }}
         run: node scripts/update-players.js
 
       - name: Commit and Push Changes
@@ -36,14 +33,12 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
-          # 1. Sync with any manual edits made on the GitHub website
+          # 1. Pull latest changes to sync up
           git pull --rebase origin main
           
-          # 2. Stage the updated player.json
+          # 2. Add the file (Note: using player.json SINGULAR to match your repo)
           git add player.json
           
-          # 3. Only commit if the file actually changed from the API update
-          git commit -m "Auto-update players [$(date)]" || echo "No changes to commit"
-          
-          # 4. Push back to your repository
+          # 3. Commit and push
+          git commit -m "Daily squad update [$(date)]" || echo "No changes to commit"
           git push origin main
