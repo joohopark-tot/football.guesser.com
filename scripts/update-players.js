@@ -34,10 +34,11 @@ async function fetchAll() {
 
             if (data.response && data.response.length > 0) {
                 const mapped = data.response.map(item => {
-                    // FIX: Safe navigation for statistics array to prevent 'reading 0' crash
+                    // FIX: This 'stats' constant safely checks for the statistics array
                     const stats = item.statistics?.[0]; 
                     return {
                         name: item.player.name,
+                        // If stats or team is missing, it defaults to 'Unknown'
                         club: stats?.team?.name || "Unknown Club",
                         league: league.name,
                         nationality: item.player.nationality,
@@ -46,15 +47,16 @@ async function fetchAll() {
                     };
                 });
                 allPlayers = [...allPlayers, ...mapped];
-                console.log(`✅ Successfully added ${mapped.length} players from ${league.name}`);
+                console.log(`✅ Added ${mapped.length} players from ${league.name}`);
             }
-            // Respect API rate limits
+            // Wait to respect API rate limits
             await new Promise(r => setTimeout(r, 1500));
         } catch (e) {
             console.error(`❌ Error fetching ${league.name}:`, e.message);
         }
     }
 
+    // Save to player.json
     fs.writeFileSync('player.json', JSON.stringify(allPlayers, null, 2));
     console.log(`\n🎉 DONE! Saved ${allPlayers.length} players to player.json`);
 }
