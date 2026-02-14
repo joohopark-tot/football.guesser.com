@@ -2,7 +2,7 @@ name: Daily Squad Sync
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Runs at midnight
+    - cron: '0 0 * * *' # Runs every night at midnight UTC
   workflow_dispatch:    # Allows manual trigger
 
 permissions:
@@ -16,7 +16,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # <--- THIS FIXES THE "[rejected] fetch first" ERROR
+          fetch-depth: 0 # Crucial for fixing the sync error!
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -31,14 +31,4 @@ jobs:
       - name: Commit and Push Changes
         run: |
           git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          
-          # 1. Pull latest changes to sync up
-          git pull --rebase origin main
-          
-          # 2. Add the file (Note: using player.json SINGULAR to match your repo)
-          git add player.json
-          
-          # 3. Commit and push
-          git commit -m "Daily squad update [$(date)]" || echo "No changes to commit"
-          git push origin main
+          git config --global user.email "github
