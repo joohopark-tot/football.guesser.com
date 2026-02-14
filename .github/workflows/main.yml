@@ -1,25 +1,49 @@
 name: Daily Squad Sync
-on:
-  workflow_dispatch:
-  schedule:
-    - cron: '0 0 * * *'
 
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs every night at midnight UTC
+  workflow_dispatch:    # Allows you to run it manually from the Actions tab
+
+# This gives the Action permission to write the new player.json to your repo
 permissions:
-  contents: write  # THIS IS THE MAGIC LINE
+  contents: write
 
 jobs:
   update:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - name: Run Update
-        run: node scripts/update-players.js
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          # Fetches full history so rebase works correctly
+          fetch-depth: 0 
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run Update Script
         env:
-          API_KEY: ${{ secrets.API_KEY }}
-      - name: Commit and Push
+          # This pulls the key from your Settings > Secrets > Actions
+          API_KEY: ${{ secrets.API_KEY }} 
+        run: node scripts/update-players.js
+
+      - name: Commit and Push Changes
         run: |
-          git config --global user.name "GitHub Action"
-          git config --global user.email "action@github.com"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # 1. Sync with any manual edits made on the GitHub website
+          git pull --rebase origin main
+          
+          # 2. Stage the updated player.json
           git add player.json
-          git commit -m "Update player data" || exit 0
-          git push
+          
+          # 3. Only commit if the file actually changed from the API update
+          git commit -m "Auto-update players [$(date)]" || echo "No changes to commit"
+          
+          # 4. Push back to your repository
+          git push origin main
