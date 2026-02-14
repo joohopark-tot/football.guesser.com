@@ -4,12 +4,14 @@ const API_KEY = process.env.API_KEY;
 
 // 1. Define leagues with their specific active season
 const LEAGUES = [
-    { id: 39, name: "Premier League", season: 2025 }, // 2025-2026 Season
-    { id: 140, name: "La Liga", season: 2025 },       // 2025-2026 Season
-    { id: 78, name: "Bundesliga", season: 2025 },     // 2025-2026 Season
-    { id: 135, name: "Serie A", season: 2025 },       // 2025-2026 Season
-    { id: 61, name: "Ligue 1", season: 2025 },        // 2025-2026 Season
-    { id: 292, name: "K League 1", season: 2025 }     // 2025 Season (Use 2026 only if 2025 returns 0)
+   const LEAGUES = [
+    { id: 39, name: "Premier League", season: 2025 },     // 25/26 Season (Current)
+    { id: 140, name: "La Liga", season: 2025 },          // 25/26 Season (Current)
+    { id: 78, name: "Bundesliga", season: 2025 },        // 25/26 Season (Current)
+    { id: 135, name: "Serie A", season: 2025 },          // 25/26 Season (Current)
+    { id: 61, name: "Ligue 1", season: 2025 },           // 25/26 Season (Current)
+    { id: 292, name: "K League 1", season: 2026 },       // 2026 Season (NEW - Joo Min-kyu @ Daejeon)
+    { id: 253, name: "Major League Soccer", season: 2026 } // 2026 Season (NEW - Son @ LAFC)
 ];
 
 async function fetchAll() {
